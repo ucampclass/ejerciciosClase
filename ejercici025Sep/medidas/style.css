@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.text {
+  display: inline-block;
+  background-color: aqua;
+  min-width: 25px;
+  min-height: 15px;
+  max-width: 50px;
+  max-height: 15px;
+}

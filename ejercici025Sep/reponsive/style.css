@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  background-color: orange;
+  text-align: center;
+}
+
+/* @media tipo-medio(condicion){
+
+} */
+
+/* @media print {
+  .title {
+    text-align: right;
+  }
+} */
+
+@media screen and (max-width: 768px) {
+  .title {
+    background-color: red;
+    font-size: 4.5rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .title {
+    background-color: #d31895;
+    color: white;
+    font-size: 2.5rem;
+  }
+}

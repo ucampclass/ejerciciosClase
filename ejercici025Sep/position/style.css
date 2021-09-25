@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 200vh;
+}
+
+.container {
+  width: 500px;
+  height: 500px;
+  border: 4px solid red;
+  margin: 0 auto;
+  position: relative;
+}
+
+.box {
+  width: 80px;
+  height: 80px;
+  color: white;
+  background-color: red;
+  text-align: center;
+  margin: 5px;
+}
+
+.static {
+  position: static;
+  left: 15px;
+}
+.relative {
+  background-color: orange;
+  position: relative;
+  left: 5px;
+  bottom: 5px;
+}
+
+.absolute {
+  background-color: aquamarine;
+  color: black;
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.fixed {
+  background-color: violet;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
