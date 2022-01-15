@@ -42,6 +42,14 @@ function App() {
         </div>
         <div className='col-6'>
           <h1>Agregar tarea</h1>
+          <form>
+            <label className='form-label'>Nombre tarea</label>
+            <input type='text' className='form-control' />
+            <label className='form-label'>Nota</label>
+            <input type='text' className='form-control' />
+
+            <button className='btn btn-dark'>Agregar tarea</button>
+          </form>
         </div>
       </div>
     </div>
