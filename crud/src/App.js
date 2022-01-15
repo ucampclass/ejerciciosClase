@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore/lite';
 import { dbConfig } from './config/firebase';
 
 function App() {
@@ -7,29 +14,35 @@ function App() {
   // const [form, setForm] = useState({ nombre: '', nota: '' });
   const [nombre, setNombre] = useState('');
   const [nota, setNota] = useState('');
+  const [id, setId] = useState('');
+  const [esEditar, setEsEditar] = useState(false);
 
   useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        const DB = collection(dbConfig, 'tareas');
-        const listadoTareas = await getDocs(DB);
-        const listadoFinal = listadoTareas.docs.map((item) => ({
-          id: item.id,
-          ...item.data(),
-        }));
-        setListaTareas(listadoFinal);
-      } catch (e) {
-        console.log('hubo un error!!!');
-        console.log(e);
-      }
-    };
-
     obtenerDatos();
   }, []);
 
+  const obtenerDatos = async () => {
+    try {
+      const DB = collection(dbConfig, 'tareas');
+      const listadoTareas = await getDocs(DB);
+      const listadoFinal = listadoTareas.docs.map((item) => ({
+        id: item.id,
+        ...item.data(),
+      }));
+      setListaTareas(listadoFinal);
+    } catch (e) {
+      console.log('hubo un error!!!');
+      console.log(e);
+    }
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    guardaTarea();
+    if (esEditar) {
+      actulizarEnDB();
+    } else {
+      guardaTarea();
+    }
   };
 
   const guardaTarea = async () => {
@@ -37,12 +50,6 @@ function App() {
       nombre,
       nota,
     };
-    // const datoAGuardar = {
-    //   nombre:nombre,
-    //   nota: nota,
-    // };
-
-    console.log(datoAGuardar);
     try {
       const DB = collection(dbConfig, 'tareas');
       const item = await addDoc(DB, datoAGuardar);
@@ -61,6 +68,49 @@ function App() {
     setNota(texto);
   };
 
+  const editarTarea = (item) => {
+    setEsEditar(true);
+    setNombre(item.nombre);
+    setNota(item.nota);
+    setId(item.id);
+  };
+
+  const actulizarEnDB = async () => {
+    try {
+      const datos = {
+        nombre,
+        nota,
+      };
+
+      const config = doc(dbConfig, 'tareas', id);
+      await updateDoc(config, datos);
+      obtenerDatos();
+      // const resultado = listadoTareas.map((item) =>
+      //   item.id === id
+      //     ? { id: item.id, nombre: datos.nombre, nota: datos.nota }
+      //     : item
+      // );
+      // setListaTareas(resultado);
+    } catch (e) {
+      console.log('hubo un error!!!');
+      console.log(e);
+    }
+  };
+
+  const eliminarTarea = async (item) => {
+    try {
+      const ref = doc(dbConfig, 'tareas', item.id);
+      await deleteDoc(ref);
+
+      obtenerDatos();
+      // const resultadoFiltrado = listadoTareas.filter((x) => x.id !== item.id);
+      // setListaTareas(resultadoFiltrado);
+    } catch (e) {
+      console.log('hubo un error!!!');
+      console.log(e);
+    }
+  };
+
   return (
     <div className='container'>
       <div className='row'>
@@ -73,28 +123,44 @@ function App() {
                 className='list-group-item d-flex justify-content-between align-items-center'
               >
                 {item.nombre}
+                <div>
+                  <button
+                    className='btn btn-outline-warning'
+                    onClick={() => editarTarea(item)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className='btn btn-outline-danger'
+                    onClick={() => eliminarTarea(item)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
         </div>
         <div className='col-6'>
-          <h1>Agregar tarea</h1>
+          <h1>{esEditar ? 'Editar tarea' : 'Agregar tarea'}</h1>
           <form onSubmit={submit}>
             <label className='form-label'>Nombre tarea</label>
             <input
               type='text'
               className='form-control'
               onChange={(e) => handleFormNombre(e.target.value)}
+              value={nombre}
             />
             <label className='form-label'>Nota</label>
             <input
               type='text'
               className='form-control'
               onChange={(e) => handleFormNota(e.target.value)}
+              value={nota}
             />
 
             <button type='submit' className='btn btn-dark'>
-              Agregar tarea
+              {esEditar ? 'Actualiza' : 'Agregar'}
             </button>
           </form>
         </div>
