@@ -1,0 +1,14 @@
+{
+  "name": "api1",
+  "version": "1.0.0",
+  "description": "Mi primer api",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index"
+  },
+  "author": "Daniel Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
