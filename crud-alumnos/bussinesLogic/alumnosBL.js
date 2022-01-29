@@ -32,9 +32,30 @@ const crearUnAlumno = (nombre, apellido, edad, sexo) => {
   return agregarADB;
 };
 
+const actualizarAlumno = (id, sexo, edad) => {
+  const alumno = obtenerAlumnoPorId(id);
+
+  if (sexo !== undefined) {
+    //Distonto de undefined y disto null{
+    alumno.sexo = sexo;
+  }
+  if (edad !== undefined) {
+    alumno.edad = edad;
+  }
+
+  return alumno;
+};
+
+const eliminarAlumno = (id) => {
+  const posicionEnArreglo = DB.findIndex((x) => x.id === id);
+  DB.splice(posicionEnArreglo, 1);
+};
+
 module.exports = {
   obtenerTodosLosAlumnos,
   obtenerAlumnoPorSexo,
   obtenerAlumnoPorId,
   crearUnAlumno,
+  actualizarAlumno,
+  eliminarAlumno,
 };

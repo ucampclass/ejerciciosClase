@@ -1,6 +1,9 @@
 const {
   obtenerTodosLosAlumnos,
   crearUnAlumno,
+  obtenerAlumnoPorId,
+  actualizarAlumno,
+  eliminarAlumno,
 } = require('../bussinesLogic/alumnosBL');
 
 const respuesta = {
@@ -39,13 +42,34 @@ const creaUnNuevoAlumno = (req, res) => {
 };
 
 const actualizaAlumno = (req, res) => {
-  respuesta.messages = 'Este es un put';
+  const validoSiExiste = obtenerAlumnoPorId(req.body.id);
+
+  if (!validoSiExiste) {
+    (respuesta.messages = 'El alumno no existe'), (respuesta.status = false);
+    respuesta.data = [];
+
+    return res.status(404).json(respuesta);
+  }
+
+  respuesta.data = actualizarAlumno(req.body.id, req.body.sexo, req.body.edad);
+  respuesta.messages = 'Se actualizo el alumno correctamente';
   return res.json(respuesta);
 };
 
-const eliminaAlumno = (res, req) => {
-  respuesta.messages = 'Este es un delete';
-  return req.json(respuesta);
+const eliminaAlumno = (req, res) => {
+  const validoSiExiste = obtenerAlumnoPorId(req.body.id);
+
+  if (!validoSiExiste) {
+    (respuesta.messages = 'El alumno no existe'), (respuesta.status = false);
+    respuesta.data = [];
+
+    return res.status(404).json(respuesta);
+  }
+
+  eliminarAlumno(req.body.id);
+  respuesta.messages = 'Alumno eliminado correctamente';
+  respuesta.data = [];
+  return res.json(respuesta);
 };
 
 module.exports = {
