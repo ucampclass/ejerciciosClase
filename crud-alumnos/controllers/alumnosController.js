@@ -5,7 +5,7 @@ const {
   actualizarAlumno,
   eliminarAlumno,
 } = require('../bussinesLogic/alumnosBL');
-
+//Controller que se llame profesorConAlumnos
 const respuesta = {
   messages: '',
   status: true,
