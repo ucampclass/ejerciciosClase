@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 /**
  * Rutas
  */
-app.use('api/alumnos', alumnosRouter);
+app.use('/api/alumnos', alumnosRouter);
 
 app.listen(3000, () => {
   console.log('corriendo servidor...');
