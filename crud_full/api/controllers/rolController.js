@@ -1,22 +1,24 @@
 const { listarRolesActivo, nuevoRol } = require("../bussinesLogic/rolesBL");
 const { validationResult } = require("express-validator");
-
-const response = { success: true, messages: "", data: [] };
+const { CustomMessages } = require("../utils/messages");
+const { GenericResponse } = require("../utils/genericResponse");
 
 const obtener = async (req, res) => {
+  const response = new GenericResponse();
   try {
     response.data = await listarRolesActivo();
     return res.json(response);
   } catch (error) {
     console.log(error);
     response.success = false;
-    response.messages = "Problema interno";
+    response.messages = CustomMessages.error_500;
     response.data = [];
     return res.status(500).json(response);
   }
 };
 
 const guardar = async (req, res) => {
+  const response = new GenericResponse();
   try {
     const errors = validationResult(req);
 
@@ -34,7 +36,7 @@ const guardar = async (req, res) => {
   } catch (error) {
     console.log(error);
     response.data = [];
-    response.messages = "Hubo un error interno";
+    response.messages = CustomMessages.error_500;
     response.success = false;
 
     return res.status(500).json(response);
