@@ -1,7 +1,9 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
-const { obtener } = require('../controllers/rolController');
+const { obtener, guardar } = require("../controllers/rolController");
+const validator = require("../validators/rolValidator");
 
-router.get('/', obtener);
+router.get("/", obtener);
+router.post("/", validator.createRolValidator, guardar);
 
 module.exports = router;
