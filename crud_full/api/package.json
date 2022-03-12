@@ -4,7 +4,8 @@
   "description": "Api para productos de computo",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start": "node index.js",
+    "start:dev": "nodemon index"
   },
   "author": "Daniel Garcia",
   "license": "ISC",
