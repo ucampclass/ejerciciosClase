@@ -30,7 +30,7 @@ const Shopping = () => {
   const createScriptPay = (preferenceId) => {
     // eslint-disable-next-line no-undef
     const mp = new MercadoPago("TEST-337c4426-2bd5-4acc-a9b4-ae85301e4c3a", {
-      locale: "es-AR",
+      locale: "es-MX",
     });
 
     mp.checkout({
@@ -39,7 +39,7 @@ const Shopping = () => {
       },
       render: {
         container: ".order-actions", // Indica el nombre de la clase donde se mostrará el botón de pago
-        label: "Pagar", // Cambia el texto del botón de pago (opcional)
+        label: "Pagar***", // Cambia el texto del botón de pago (opcional)
       },
     });
 

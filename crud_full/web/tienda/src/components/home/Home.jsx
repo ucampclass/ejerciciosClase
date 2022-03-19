@@ -9,7 +9,7 @@ const Home = () => {
   }, []);
 
   const getProducts = () => {
-    fetch("http://localhost:9000/api/products")
+    fetch("https://api-app-storage-img.herokuapp.com/api/products")
       .then((res) => res.json())
       .then((result) => {
         setData(result.data);
