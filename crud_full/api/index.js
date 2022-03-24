@@ -9,6 +9,7 @@ require("dotenv").config();
 const rolRoutes = require("./Routes/rolRoutes");
 const userRoutes = require("./Routes/userRoutes");
 const productRoutes = require("./Routes/productRoutes");
+const pagoRoutes = require("./Routes/pagoRoutes");
 
 const app = express();
 dbConnection();
@@ -21,6 +22,7 @@ app.use(bodyParse.urlencoded({ extended: false }));
 app.use("/api/roles", rolRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/pagos", pagoRoutes);
 
 app.listen(process.env.PORT || 9001, () => {
   console.log("corriendo servidor...");
